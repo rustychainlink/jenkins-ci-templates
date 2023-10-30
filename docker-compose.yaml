@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  ci-server:
+    container_name: jenkins 
+    build:
+      context: ./config/jenkins
+    privileged: true
+    user: jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+# References:
+# - https://www.cloudbees.com/blog/how-to-install-and-run-jenkins-with-docker-compose

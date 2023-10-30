@@ -1,0 +1,14 @@
+#------------------------------------------------------------------------------#
+# Plugins for extending the functionality of the Jenkins server.
+# More info is found here: https://plugins.jenkins.io
+#------------------------------------------------------------------------------#
+pipeline-model-definition:latest
+workflow-aggregator:latest
+timestamper:latest
+git:latest
+configuration-as-code:latest
+pipeline-stage-view:latest
+matrix-auth:latest
+authorize-project:latest
+metrics:latest
+prometheus:latest

@@ -1,0 +1,18 @@
+jenkins:
+  # Prevent running builds on built-in node
+  numExecutors: 0
+  labelString: "controller"
+  # -------------------------------------------------------- #
+  # Set-up the admin account, and specify access permissions #
+  # -------------------------------------------------------- #
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: "admin"
+         password: "password"
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "USER:Overall/Administer:admin"
+        - "GROUP:Overall/Read:authenticated"
