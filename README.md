@@ -1,2 +1,2 @@
-# building-blocks
-Boilerplate used as starting points for other projects
+# Jolly Jenkins!
+A collection of demos focused around implementing Jenkins.
