@@ -11,12 +11,12 @@ Basic usage:
 jenkins-local
 # Please specify a valid option:
 #     --casc 	    (view local jenkins casc docs)
-#     --in 	        (ssh into running container)
-#     --check 	    (validate pipeline code)
-#     --jobdsl 	    (view local jenkins job dsl)
+#     --in 	      (ssh into running container)
+#     --check     (validate pipeline code)
+#     --jobdsl 	  (view local jenkins job dsl)
 #     --logs 	    (view running container logs)
 #     --down 	    (undeploy container)
-#     --purge 	    (purge all container traces)
-#     --rebuild     (rebuild container)
-#     --up 	        (deploy container)
+#     --purge 	  (purge all container traces)
+#     --rebuild   (rebuild container)
+#     --up 	      (deploy container)
 ```
