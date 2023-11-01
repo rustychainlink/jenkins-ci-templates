@@ -12,3 +12,4 @@ matrix-auth:latest
 authorize-project:latest
 metrics:latest
 prometheus:latest
+disk-usage:latest

@@ -89,3 +89,21 @@ _validate_pipeline_code() {
 	curl --user "$JENKINS_USERNAME:$JENKINS_PASSWORD" -X POST -F "jenkinsfile=<$jenkinsfile" "$JENKINS_URL/pipeline-model-converter/validate"
 
 }
+
+# ---------------------------------------------------------------------------- #
+# A simple utility for setting-up the virtual environment
+# ---------------------------------------------------------------------------- #
+setup-venv() {
+    # install 'virtualenv' if it's missing.
+    if [ -z "$(command -v virtualenv)" ]; then
+        echo "Missing virtualenv, please install"
+    else
+        virtualenv --python python3.11 .venv
+        source .venv/bin/activate
+        pip install -r ./config/requirements.txt
+    fi
+
+# Notes:
+# - https://mothergeo-py.readthedocs.io/en/latest/development/how-to/venv.html
+# - https://wiki.archlinux.org/title/Python/Virtual_environment
+}
