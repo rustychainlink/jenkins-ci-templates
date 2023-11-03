@@ -1,6 +1,13 @@
 import os, io
 from dataclasses import dataclass, asdict
-from typing import List
+from typing import List, Dict
+from prometheus_client import start_http_server, Info
+import time
+
+CPU_HOG_COUNT:int=5
+PROMETHEUS_PORT:int=8000
+EXPORT_RATE:int=1 #Hz
+
 
 @dataclass
 class ProcessMetrics:
@@ -16,11 +23,12 @@ class ProcessMetrics:
     time:str=''
     command:str=''
 
-def get_list_of_processes(count:int=0) -> List[ProcessMetrics]:
+
+def get_list_of_processes(n:int=0) -> List[ProcessMetrics]:
 
     # Extract data from source
-    TOP_10_CPU_HOGS=f"ps aux --sort -pcpu | head -n{1+count}"
-    stdout=os.popen(TOP_10_CPU_HOGS).read()
+    TOP_n_CPU_HOGS=f"ps aux --sort -pcpu | head -n{1+n}"
+    stdout=os.popen(TOP_n_CPU_HOGS).read()
     
     PROCESS_LIST:List[ProcessMetrics]=[]
 
@@ -45,4 +53,21 @@ def get_list_of_processes(count:int=0) -> List[ProcessMetrics]:
 
     return PROCESS_LIST
 
-print([asdict(process) for process in get_list_of_processes(5)])
+
+if __name__=="__main__":
+
+    # prepare info metrics, launch exporter service
+    process_info_metric_list = [Info(f"process_cpu_hog_{i}", '') for i in range(CPU_HOG_COUNT)]
+    start_http_server(PROMETHEUS_PORT)
+
+    while True:
+
+        # gather process data
+        top_cpu_hogs_list:List[ProcessMetrics]=\
+                [asdict(process) for process in get_list_of_processes(CPU_HOG_COUNT+1)][1:]
+
+        # export process data
+        for metric_obj, process_info in zip(process_info_metric_list, top_cpu_hogs_list):
+            metric_obj.info(process_info)
+
+        time.sleep(1/float(EXPORT_RATE))
