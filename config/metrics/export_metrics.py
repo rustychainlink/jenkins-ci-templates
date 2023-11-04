@@ -30,12 +30,12 @@ def get_list_of_processes(n:int=0) -> List[ProcessMetrics]:
     TOP_n_CPU_HOGS=f"ps aux --sort -pcpu | head -n{1+n}"
     stdout=os.popen(TOP_n_CPU_HOGS).read()
     
-    PROCESS_LIST:List[ProcessMetrics]=[]
+    process_list:List[ProcessMetrics]=[]
 
     # Parse data
     with io.StringIO(stdout) as buffer:
         for line in buffer.readlines():
-            PROCESS_LIST.append(
+            process_list.append(
                 ProcessMetrics(
                     user=line.split()[0],
                     pid=line.split()[1],
@@ -51,7 +51,7 @@ def get_list_of_processes(n:int=0) -> List[ProcessMetrics]:
                 )
             )
 
-    return PROCESS_LIST
+    return process_list
 
 
 if __name__=="__main__":
